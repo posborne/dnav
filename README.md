@@ -24,16 +24,13 @@ commands.
 Install It
 ----------
 
-There are two steps to install dnav in your system and make it
-usable.  These steps are the following:
-
-1. Install dnav by cloning the git repo to your home directory as follows
+Install dnav by cloning the git repo to your home directory as follows
 
     $ git clone https://github.com/posborne/dnav ~/.dnav
 
-2. Enable shell integration (which allows dnav to modify your current
-    working directory) by adding the following to your `.bashrc`,
-    `.zshrc`, or other shell configuration file.
+Enable shell integration (which allows dnav to modify your current
+working directory) by adding the following to your `.bashrc`,
+`.zshrc`, or other shell configuration file.
 
     source ~/.dnav/dnav-shell.sh
 
