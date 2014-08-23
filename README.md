@@ -40,6 +40,60 @@ run the following:
 
     dnav --help
 
+Basic Usage/Examples
+--------------------
+
+There aren't too many subcommands for `dnav` and they are all pretty
+intuitive.  Here's the basic ones that you are likely to use most
+frequently.
+
+### Add and Navigate
+
+    $ cd ~/Projects/wizzbang
+    $ dnav add wb  # nice and short
+    $ cd ../other-project
+    $ dnav add op
+    $ dnav cd wb
+    $ pwd
+    /home/user/Projects/wizzbang
+    $ dnav cd op
+    $ pwd
+    /home/user/Projects/other-project
+
+### List Aliases
+
+    $ dnav list
+    op -> /home/user/Projects/other-project
+    wb -> /home/user/Projects/wizzbang
+
+### Removing an Alias
+
+    $ dnav rm op
+    $ dnav list
+    wb -> /home/user/Projects/wizzbang
+
+### Cleaning up Bad Links
+
+    $ mv ~/Projects/other-project ~/Projects/super-wizzbang
+    $ dnav list
+    op -> /home/user/Projects/other-project (broken)
+    wb -> /home/user/Projects/wizzbang
+    $ dnav prune
+    Removing bad alias op -> /home/user/Projects/other-project
+    $ dnav list
+    wb -> /home/user/Projects/wizzbang
+
+### Starting Fresh
+
+    $ dnav clear
+
+### Using dnav with other Unix Tools
+
+    # 'dnav show <alias>' just outputs the path 'op' points to
+    $ find `dnav show op` -name '*.txt'
+    ...
+
+
 How Does It Work
 ----------------
 
