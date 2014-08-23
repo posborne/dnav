@@ -38,7 +38,7 @@ That's it.  Don't forget to restart your shell or re-source your shell
 init for the update to take effect.  To test, you should be able to
 run the following:
 
-    dnav help
+    dnav --help
 
 How Does It Work
 ----------------
