@@ -32,7 +32,7 @@ Enable shell integration (which allows dnav to modify your current
 working directory) by adding the following to your `.bashrc`,
 `.zshrc`, or other shell configuration file.
 
-    source ~/.dnav/dnav-shell.sh
+    source ~/.dnav/dnav.sh
 
 That's it.  Don't forget to restart your shell or re-source your shell
 init for the update to take effect.  To test, you should be able to

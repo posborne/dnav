@@ -21,7 +21,7 @@ def get_target_for_alias(alias):
 
     """
     alias_path = os.path.join(get_symlink_directory(), alias)
-    if not os.path.exists(alias_path):
+    if not os.path.lexists(alias_path):  # We want True even if the link is broken here
         return None
     return os.path.abspath(os.readlink(alias_path))
 
@@ -89,14 +89,34 @@ def do_rm(args):
 
 def do_clear(args):
     """Clear command handler"""
+    # TODO: in theory it would be nice to confirm that this is actually what the user
+    # wants.  In practice, the current shell script wrapper makes this difficult as
+    # it buffers all output from this command
+    for alias in os.listdir(get_symlink_directory()):
+        print("Removing alias %r" % (alias, ))
+        os.unlink(os.path.join(get_symlink_directory(), alias))
+    return 0
 
 
 def do_list(args):
     """List command handler"""
+    for alias in os.listdir(get_symlink_directory()):
+        target = get_target_for_alias(alias)
+        if not os.path.exists(target):
+            print("%s -> %s (broken)" % (alias, target))
+        else:
+            print("%s -> %s" % (alias, target))
+    return 0
 
 
 def do_prune(args):
     """Prune command handler"""
+    for alias in os.listdir(get_symlink_directory()):
+        target = get_target_for_alias(alias)
+        if not os.path.exists(target):
+            print("Removing bad alias %s -> %s" % (alias, target))
+            os.unlink(os.path.join(get_symlink_directory(), alias))
+    return 0
 
 
 def build_argument_parser():
