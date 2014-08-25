@@ -8,7 +8,20 @@
 # directly.  In fact, running it directly is unlikely to
 # do much of anything.
 
-DNAV_DIRECTORY=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
+# As this script is sourced, we do not have tight control over the shell
+# we are running and ther are some differences between bash, zsh, dash
+# which are important for this scripts correct operation.
+if [ -n "$ZSH_VERSION" ]; then
+    DNAV_SHELL="zsh"
+    DNAV_DIRECTORY=$(readlink -f $(dirname "$0"))
+elif [ -n "$BASH_VERSION" ]; then
+    DNAV_SHELL="bash"
+    DNAV_DIRECTORY=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
+else
+    # unknown -- determine behavior of dash?
+    DNAV_SHELL="???"
+    DNAV_DIRECTORY=$(readlink -f $(dirname "$0"))
+fi
 
 dnav() {
     output=$(python $DNAV_DIRECTORY/dnav.py $*)
