@@ -11,17 +11,28 @@
 # As this script is sourced, we do not have tight control over the shell
 # we are running and ther are some differences between bash, zsh, dash
 # which are important for this scripts correct operation.
+
+# Temporary function is unset below
+dnav_get_directory() {
+python <<-EOF
+from os.path import realpath, dirname
+print(realpath(dirname("${0}")))
+EOF
+}
+
 if [ -n "$ZSH_VERSION" ]; then
     DNAV_SHELL="zsh"
-    DNAV_DIRECTORY=$(readlink -f $(dirname "$0"))
+    DNAV_DIRECTORY=`dnav_get_directory ${0}`
 elif [ -n "$BASH_VERSION" ]; then
     DNAV_SHELL="bash"
-    DNAV_DIRECTORY=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
+    DNAV_DIRECTORY=`dnav_get_directory ${BASH_SOURCE[0]}`
 else
     # unknown -- determine behavior of dash?
     DNAV_SHELL="???"
-    DNAV_DIRECTORY=$(readlink -f $(dirname "$0"))
+    DNAV_DIRECTORY=`dnav_get_directory ${0}`
 fi
+
+unset dnav_get_directory
 
 dnav() {
     output=$(python $DNAV_DIRECTORY/dnav.py $*)
