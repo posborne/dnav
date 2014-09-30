@@ -16,7 +16,7 @@
 dnav_get_directory() {
 python <<-EOF
 from os.path import realpath, dirname
-print(realpath(dirname("${0}")))
+print(realpath(dirname("${1}")))
 EOF
 }
 
